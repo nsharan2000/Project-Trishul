@@ -7,9 +7,6 @@ Created on Fri Dec  3 12:12:19 2021
 
 import cv2
 
-#initialize background subtractor object
-foog=cv2.createBackgroundSubtractorMOG2(detectShadows = True, varThreshold = 50, history = 2000)
-
 #noise fileter threshold
 thresh = 1000
 
@@ -19,9 +16,8 @@ reference_frame = None # first_frame is the reference frame
 while True:
     check,frame = video.read()
     
-    frame = foog.apply(frame)
-    
-    
+    if check == False:
+        break
     gray = cv2.cvtColor(frame,cv2.COLOR_BGR2GRAY)
     gray = cv2.GaussianBlur(gray,(21,21),0) #21,21 is the blurring kernel size
     if reference_frame is None:
@@ -48,5 +44,3 @@ while True:
     key = cv2.waitKey(1)
     if key ==ord("q"):
         exit()
-    
-        
